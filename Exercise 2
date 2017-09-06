@@ -1,0 +1,24 @@
+# 1. Download a CSV file from OECD, read it and remove the last row
+
+
+oecd.df <- read.table("https://data.oecd.org/healthstat/infant-mortality-rates.htm")
+str(oecd.df)
+
+oecd.final <- head(oecd.df,-1)
+
+
+#2. Read table (from wikipedia) and find the number of ODIs won by India
+
+file<-read_html("https://en.wikipedia.org/wiki/India%E2%80%93Pakistan_cricket_rivalry")
+tables<-html_nodes(file, "table")
+table1 <- html_table(tables[3], fill = TRUE)
+View(table1)
+table_final <- as.data.frame(table1)
+View(table_final)
+matchesWon=0  #Initiating the tracking counter
+for(i in 1:nrow(table_final))
+  {
+    matchesWon <- matchesWon+table_final$India[i]
+    }
+print(paste('Total no of ODIs won by India are'))
+print(matchesWon)
